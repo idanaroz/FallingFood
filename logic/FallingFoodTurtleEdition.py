@@ -53,18 +53,7 @@ by = writing_turtle("white", -340, 320, by_string, 26, "italic")
 food_speed = 5
 food_on_plate = False
 
-chef_img = r"/Users/gnir/PycharmProjects/games/Images/chef.gif"
-pancakes_img = r"/Users/gnir/PycharmProjects/games/Images/pancakes.gif"
-
-# Creating the chef
-wn.addshape(chef_img)
-chef = turtle.Turtle()
-chef.shape(chef_img)
-chef.resizemode("auto")
-chef.penup()
-chef.setposition(100, -325)
-chef_speed = 20
-
+pancakes_img = r"/Users/gnir/PycharmProjects/FallingFood/Images/pancakes.gif"
 number_of_pancakes = 10
 
 orders = []
@@ -128,34 +117,34 @@ def change_size(enlarge_picture, img_path, x, y):
 
 
 def move_right():
-    x = chef.xcor()
-    x += chef_speed
+    x = game.chef.turtle.xcor()
+    x += game.chef.speed
     for pancake in game.pancake_list:
         turtle = pancake.turtle
         turtle.penup()
         pancake_x = turtle.xcor()
         # turtle.hideturtle()
         if x < 290 and not pancake.on_plate and not game.freeze:
-            chef.setx(x)
+            game.chef.turtle.setx(x)
         if x < 290 and pancake.on_plate and not game.freeze:
-            chef.setx(x)
-            pancake_x += chef_speed
+            game.chef.turtle.setx(x)
+            pancake_x += game.chef.speed
             turtle.setx(pancake_x)
 
 
 def move_left():
-    x = chef.xcor()
-    x -= chef_speed
+    x = game.chef.turtle.xcor()
+    x -= game.chef.speed
     for pancake in game.pancake_list:
         turtle = pancake.turtle
         # turtle.hideturtle()
         turtle.penup()
         pancake_x = turtle.xcor()
         if x > -100 and not pancake.on_plate and not game.freeze:
-            chef.setx(x)
+            game.chef.turtle.setx(x)
         if x > -100 and pancake.on_plate and not game.freeze:
-            chef.setx(x)
-            pancake_x -= chef_speed
+            game.chef.turtle.setx(x)
+            pancake_x -= game.chef.speed
             turtle.setx(pancake_x)
 
 
@@ -172,12 +161,12 @@ def distribute_pancakes():
         # game.freeze = True
         game.freeze_game()
         chef_destination = -255
-        diff = chef.xcor() - (chef_destination)
+        diff = game.chef.turtle.xcor() - (chef_destination)
         for pancake in game.pancake_list:
             turtle = pancake.turtle
             if pancake.on_plate:
                 turtle.setx(turtle.xcor() - diff)
-        chef.setx(chef_destination)
+        game.chef.turtle.setx(chef_destination)
         # wn.ontimer(unfreeze, 4000)
 
 
@@ -275,7 +264,7 @@ while not game_over:
                     drop_pancake_down(turtle_pancake)
 
                 if turtle_pancake.ycor() in range(above_chef_coordinate, 5 + above_chef_coordinate):
-                    if is_collision(turtle_pancake, chef):
+                    if is_collision(turtle_pancake, game.chef.turtle):
 
                         if not pancake.on_plate:
                             pancake_counter += 1
