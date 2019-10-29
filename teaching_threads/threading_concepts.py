@@ -1,10 +1,12 @@
 import threading
 import time
 
+# Constants #
 SPENDING_SPEED = 3
 ALL_CUSTOMERS = []  # Todo: make this one Atomic
 
 
+# Customer class #
 class Customer:
     def __init__(self, name, amount):
         self.name = name
@@ -25,19 +27,22 @@ class Customer:
         return time.time() - self.start_time
 
 
+# Creating customers #
 idan = Customer("Idan", 50)
 guy = Customer("Guy Nir", 100000)
-
 ALL_CUSTOMERS.append(idan)
 ALL_CUSTOMERS.append(guy)
 
+# Creating thread for decrease amount #
 t = threading.Thread(target=Customer.decrease_amount,
                      args=(SPENDING_SPEED,))
 t.setName("decrease_amount-1")
-
 t.setDaemon(True)
+
+# Make the thread start working #
 t.start()
 
+# Run the game/ Logic#
 while True:
     time.sleep(5)
     thread_name = threading.current_thread().getName()
