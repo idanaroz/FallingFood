@@ -1,6 +1,7 @@
 import time
+import turtle
 
-from logic.FallingFoodTurtleEdition import wn
+wn = turtle.Screen()
 
 
 class Order:
